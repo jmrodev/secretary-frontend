@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
 import '../styles/layouts/footer.css';
 
-export const Footer = () => {
+const Footer = () => {
   return (
     <footer className="footer bg-dark text-light">
       <div className="container">
@@ -58,4 +58,5 @@ export const Footer = () => {
   );
 };
 
+export default Footer;
 

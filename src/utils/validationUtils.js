@@ -39,24 +39,6 @@ export const validatePhone = (phone) => {
   return phoneRegex.test(phone);
 };
 
-export const validateAppointment = (data) => {
-  const errors = {};
-
-  if (!data.patientName || data.patientName.trim().length < 3) {
-    errors.patientName = 'El nombre del paciente debe tener al menos 3 caracteres';
-  }
-
-  if (!data.reason || data.reason.trim().length < 10) {
-    errors.reason = 'El motivo de la consulta debe tener al menos 10 caracteres';
-  }
-
-  if (!data.date) {
-    errors.date = 'La fecha es requerida';
-  }
-
-  return errors;
-};
-
 export const validateTimeSlot = (timeSlot) => {
   const errors = {};
 
@@ -71,16 +53,3 @@ export const validateTimeSlot = (timeSlot) => {
   return errors;
 };
 
-export const validateWeekDay = (weekDay) => {
-  const errors = {};
-
-  if (!weekDay.day) {
-    errors.day = 'El día es requerido';
-  }
-
-  if (!Array.isArray(weekDay.timeSlots)) {
-    errors.timeSlots = 'Los horarios son requeridos';
-  }
-
-  return errors;
-}; 

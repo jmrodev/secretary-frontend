@@ -5,7 +5,7 @@ import { logoutAsync } from '../redux/slices/authSlice';
 import showToast from "../utils/toastUtils";
 import '../styles/layouts/header.css';
 
-export const Header = () => {
+const Header = () => {
   const dispatch = useDispatch();
   const { isAuthenticated, user } = useSelector(state => state.auth);
 
@@ -39,9 +39,7 @@ export const Header = () => {
             </li>
             {isAuthenticated && (
               <>
-                <li>
-                  <Link to="/appointments" className="nav-link">Citas</Link>
-                </li>
+
                 <li>
                   <button 
                     className="button button-outline logout-btn"
@@ -65,3 +63,5 @@ export const Header = () => {
     </header>
   );
 };
+
+export default Header;

@@ -1,7 +1,8 @@
 import config from '../config/env.cfg';
+
 export const loginUser = async (credentials) => {
   try {
-    const response = await fetch(`http://localhost:3002/api/users/login`, { 
+    const response = await fetch(`${config.baseUrl}/users/login`, { 
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -16,6 +17,11 @@ export const loginUser = async (credentials) => {
     }
 
     const data = await response.json();
+    localStorage.setItem('userName', data.user.name);
+    localStorage.setItem('userId', data.user.id);
+    localStorage.setItem('userRole', data.user.role);
+    localStorage.setItem('userEmail', data.user.email);
+    
     localStorage.setItem('authToken', data.token);
     return data;
   } catch (error) {
@@ -44,7 +50,8 @@ export const register = async (userData) => {
 
 
 export const logout = async () => {
-    const response = await fetch(`${config.baseUrl}/users/logout`, {
+    const userName = localStorage.getItem('userName');
+    const response = await fetch(`${config.baseUrl}/users/name/logout/${userName}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -59,4 +66,38 @@ export const logout = async () => {
     return true;
   } 
 
-// Eliminamos la función getCurrentUser
+  export const changePassword = async (passwordData) => {
+    const response = await fetch(`${config.baseUrl}/users/change-password`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+      },
+      body: JSON.stringify(passwordData)
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || 'Error al cambiar la contraseña');
+    }
+
+    return await response.json();
+  };
+
+  export const updateProfile = async (profileData) => {
+  const response = await fetch(`${config.baseUrl}/users/profile`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+    },
+    body: JSON.stringify(profileData)
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || 'Error al actualizar el perfil');
+  }
+
+  return await response.json();
+};

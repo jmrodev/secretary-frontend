@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { loginAsync, clearError } from '../redux/slices/authSlice';
@@ -15,6 +15,16 @@ export const Login = () => {
     userName: '',
     password: ''
   });
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    const userName = localStorage.getItem('userName');
+    const userId = localStorage.getItem('userId');
+    const userRole = localStorage.getItem('userRole');
+    const userEmail = localStorage.getItem('userEmail');
+
+    setMessage(`UserName: ${userName}, UserId: ${userId}, UserRole: ${userRole}, UserEmail: ${userEmail}`);
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,8 +45,15 @@ export const Login = () => {
     try {
       const resultAction = await dispatch(loginAsync(formData));
       if (loginAsync.fulfilled.match(resultAction)) {
+        const { token, user } = resultAction.payload; // Assuming your payload structure matches this
+        localStorage.setItem('authToken', token);
+        localStorage.setItem('userName', user.userName);
+        localStorage.setItem('userId', user.id);
+        localStorage.setItem('userRole', user.role);
+        localStorage.setItem('userEmail', user.email);
         showToast('Inicio de sesión exitoso', 'success');
-        navigate('/dashboard');
+        // navigate('/dashboard');
+
       }
     } catch (error) {
       showToast(error.message, 'error');
@@ -86,6 +103,7 @@ export const Login = () => {
         >
           {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
         </button>
+        <div className="message">{message}</div>
       </form>
     </div>
   );

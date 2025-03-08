@@ -4,9 +4,13 @@ import { updateProfile, changePassword } from '../services/authService';
 import { validatePassword } from '../utils/validationUtils';
 import ErrorMessage from '../components/common/ErrorMessage';
 import showToast from '../utils/toastUtils';
-import './styles/profile.css';
+import '../styles/profile.css';
+import '../styles/common.css'
+import { useNavigate } from 'react-router-dom';
+
 
 const Profile = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector(state => state.auth);
   const [loading, setLoading] = useState(false);
@@ -99,6 +103,7 @@ const Profile = () => {
       )}
 
       <div className="profile-sections">
+        <button className="cancel-button" onClick={() => navigate(-1)}>Cancelar</button>
         <section className="profile-section">
           <h2>Información Personal</h2>
           <form onSubmit={handleProfileSubmit}>

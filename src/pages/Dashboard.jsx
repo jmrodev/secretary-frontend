@@ -17,10 +17,10 @@ const Dashboard = () => {
 
   const adminMenuItems = [
     {
-      icon: <FaCalendarAlt />,
-      title: 'Gestión de Citas medicas',
-      description: 'Administra todas las citas médicas',
-      link: '/appointments'
+      icon: <FaUserMd />,
+      title: 'Perfil',
+      description: 'Gestiona tu perfil',
+      link: '/profile'
     },
     {
       icon: <FaUserMd />,
@@ -44,12 +44,6 @@ const Dashboard = () => {
 
   const userMenuItems = [
     {
-      icon: <FaCalendarAlt />,
-      title: 'Mis Citas',
-      description: 'Ver y gestionar tus citas',
-      link: '/appointments'
-    },
-    {
       icon: <FaUserMd />,
       title: 'Doctores',
       description: 'Ver lista de doctores',
@@ -63,7 +57,7 @@ const Dashboard = () => {
     <div className="page-container">
       <div className="container">
         <h1 className="section-title">Bienvenido, {user?.fullName}</h1>
-        
+
         <div className="grid dashboard-grid">
           {menuItems.map((item, index) => (
             <Link to={item.link} key={index} className="card dashboard-card">
@@ -84,11 +78,11 @@ const Dashboard = () => {
             <div className="grid stats-grid">
               <div className="card">
                 <h4 className="mb-2">Citas Hoy</h4>
-                <p className="stat-number">12</p>
+                <p className="stat-number">11</p>
               </div>
               <div className="card">
                 <h4 className="mb-2">Pacientes Totales</h4>
-                <p className="stat-number">15</p>
+                <p className="stat-number">14</p>
               </div>
               <div className="card">
                 <h4 className="mb-2">Doctores Activos</h4>
