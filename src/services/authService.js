@@ -21,7 +21,6 @@ export const loginUser = async (credentials) => {
     localStorage.setItem('userId', data.user.id);
     localStorage.setItem('userRole', data.user.role);
     localStorage.setItem('userEmail', data.user.email);
-    
     localStorage.setItem('authToken', data.token);
     return data;
   } catch (error) {
@@ -50,8 +49,13 @@ export const register = async (userData) => {
 
 
 export const logout = async () => {
-    const userName = localStorage.getItem('userName');
-    const response = await fetch(`${config.baseUrl}/users/name/logout/${userName}`, {
+  localStorage.removeItem('userName');
+  localStorage.removeItem('userId');
+  localStorage.removeItem('userRole');
+  localStorage.removeItem('userEmail');
+  localStorage.removeItem('authToken');
+    // const userName = localStorage.getItem('userName');
+    const response = await fetch(`${config.baseUrl}/logout/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

@@ -6,6 +6,9 @@ import showToast from "../utils/toastUtils";
 import '../styles/layouts/header.css';
 
 const Header = () => {
+  const userName = localStorage.getItem('userName');
+  const userRole = localStorage.getItem('userRole');
+
   const dispatch = useDispatch();
   const { isAuthenticated, user } = useSelector(state => state.auth);
 
@@ -28,8 +31,8 @@ const Header = () => {
         <div className="nav-content">
           {isAuthenticated && (
             <div className="user-info">
-              <span className="user-name">{user?.fullName}</span>
-              <span className="user-role">{user?.role}</span>
+              <span className="user-name">{userName}</span>
+              <span className="user-role">{userRole}</span>
             </div>
           )}
 

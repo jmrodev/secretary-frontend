@@ -52,7 +52,7 @@ export const Login = () => {
         localStorage.setItem('userRole', user.role);
         localStorage.setItem('userEmail', user.email);
         showToast('Inicio de sesión exitoso', 'success');
-        // navigate('/dashboard');
+        navigate('/dashboard');
 
       }
     } catch (error) {
