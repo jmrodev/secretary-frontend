@@ -12,6 +12,7 @@ export const getAuthToken = () => {
 
 export const removeAuthToken = () => {
   localStorage.removeItem('token');
+  localStorage.removeItem('authToken');
 };
 
 export const isTokenValid = () => {
@@ -26,3 +27,4 @@ export const isTokenValid = () => {
     return false;
   }
 }; 
+

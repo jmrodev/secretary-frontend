@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { registerAsync } from '../redux/slices/authSlice';
 import { validatePassword, validateEmail, validatePhone } from '../utils/validationUtils';
-import ErrorMessage from '../messages/ErrorMessage';
+// import ErrorMessage from '../messages/ErrorMessage';
 import showToast from '../utils/toastUtils';
 import './styles/register.css';
 
@@ -94,12 +94,12 @@ const Register = () => {
     <div className="register-container">
       <form className="register-form" onSubmit={handleSubmit}>
         <h2>Registro</h2>
-
+{/* 
         {error && (
           <ErrorMessage
             message={error}
             onDismiss={() => dispatch(clearError())}
-          />
+          /> */}
         )}
 
         <div className="form-row">

@@ -17,6 +17,12 @@ const Dashboard = () => {
 
   const adminMenuItems = [
     {
+      icon: <FaCalendarAlt />,
+      title: 'Citas',
+      description: 'Administra las citas',
+      link: '/appointments'
+    },
+    {
       icon: <FaUserMd />,
       title: 'Perfil',
       description: 'Gestiona tu perfil',

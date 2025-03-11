@@ -1,0 +1,112 @@
+/* Contenedor principal del calendario */
+.calendar {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+}
+
+/* Encabezado del calendario */
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    background-color: #6c5ce7;
+    color: #ffffff;
+    border-radius: 12px 12px 0 0;
+}
+
+.calendar-header h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.calendar-header button {
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.calendar-header button:hover {
+    opacity: 0.8;
+}
+
+/* Días de la semana */
+.days-of-week {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background-color: #f5f5f5;
+    padding: 8px 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.day-of-week {
+    text-align: center;
+    font-size: 0.875rem;
+    color: #666666;
+    font-weight: 500;
+}
+
+/* Días del mes */
+.days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    padding: 8px;
+    flex-grow: 1;
+}
+
+.day {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    color: #333333;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.day:hover {
+    background-color: #e0e0e0;
+    transform: scale(1.05);
+}
+
+/* Días vacíos (fuera del mes actual) */
+.empty-day {
+    background-color: transparent;
+}
+
+/* Estilo para fines de semana */
+.weekend {
+    color: #ff7675;
+    font-weight: 600;
+}
+
+/* Responsive para pantallas pequeñas */
+@media (max-width: 768px) {
+    .calendar-header h2 {
+        font-size: 1rem;
+    }
+
+    .day-of-week {
+        font-size: 0.75rem;
+    }
+
+    .day {
+        font-size: 0.75rem;
+        padding: 6px;
+    }
+}

@@ -54,8 +54,9 @@ export const logout = async () => {
   localStorage.removeItem('userRole');
   localStorage.removeItem('userEmail');
   localStorage.removeItem('authToken');
+  localStorage.removeItem('token');
     // const userName = localStorage.getItem('userName');
-    const response = await fetch(`${config.baseUrl}/logout/`, {
+    const response = await fetch(`${config.baseUrl}/users/logout`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

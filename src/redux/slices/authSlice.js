@@ -24,7 +24,7 @@ export const registerAsync = createAsyncThunk(
 );
 
 export const logoutAsync = createAsyncThunk(
-  '/logout',
+  '/users/logout',
   async (_, { rejectWithValue }) => {
     try {
       await logoutUser();

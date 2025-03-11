@@ -6,7 +6,9 @@ import Doctors from '../pages/Doctors';
 import Patients from '../pages/Patients';
 import Settings from '../pages/Settings';
 import Profile from '../pages/Profile';
+import Appointments from '../pages/Appointments';
 import UnauthorizedPage from '../pages/UnauthorizedPage';
+import Register from '../pages/Register';
 
 export const router = createBrowserRouter([
   {
@@ -21,10 +23,13 @@ export const router = createBrowserRouter([
         element: <Dashboard />,
       },
       {
+        path: '/appointments',
+        element: <Appointments />,
+      },
+      {
         path: '/profile',
         element: <Profile />,
       },
-
       {
         path: '/doctors',
         element: <Doctors />,
@@ -43,4 +48,4 @@ export const router = createBrowserRouter([
       }
     ],
   },
-]); 
+]);
