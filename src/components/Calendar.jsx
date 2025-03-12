@@ -20,6 +20,12 @@ const Calendar = () => {
         setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
     };
 
+    const handleDayClick = (day) => {
+        const selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+        console.log('Selected date:', selectedDate);
+        // Aquí puedes enviar la fecha seleccionada al backend o manejarla como necesites
+    };
+
     const renderDays = () => {
         const daysInMonth = getDaysInMonth(currentDate);
         const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
@@ -33,7 +39,7 @@ const Calendar = () => {
             const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
             const isWeekend = date.getDay() === 0 || date.getDay() === 6;
             days.push(
-                <div key={day} className={`day ${isWeekend ? 'weekend' : ''}`}>
+                <div key={day} className={`day ${isWeekend ? 'weekend' : ''}`} onClick={() => handleDayClick(day)}>
                     {day}
                 </div>
             );

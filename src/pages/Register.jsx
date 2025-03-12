@@ -5,7 +5,7 @@ import { registerAsync } from '../redux/slices/authSlice';
 import { validatePassword, validateEmail, validatePhone } from '../utils/validationUtils';
 // import ErrorMessage from '../messages/ErrorMessage';
 import showToast from '../utils/toastUtils';
-import './styles/register.css';
+import '../styles/pages/register.css';
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -99,9 +99,9 @@ const Register = () => {
           <ErrorMessage
             message={error}
             onDismiss={() => dispatch(clearError())}
-          /> */}
+          /> 
         )}
-
+*/}
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="userName">Usuario:</label>
