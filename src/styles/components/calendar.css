@@ -76,38 +76,45 @@
     border-radius: 8px;
     font-size: 0.875em; /* Usar em para el tamaño de fuente */Usar em para padding */
     color: #333333;
-    cursor: pointer;8px;
-    transition: background-color 0.3s ease, transform 0.2s ease;em; /* Usar em para el tamaño de fuente */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
-   cursor: pointer;
-.day:hover {    transition: background-color 0.3s ease, transform 0.2s ease;
+
+.day:hover {
     background-color: #e0e0e0;
     transform: scale(1.05);
 }
-   background-color: #e0e0e0;
-/* Días vacíos (fuera del mes actual) */    transform: scale(1.05);
+
+/* Estilo para el día seleccionado */
+.day.selected {
+    background-color: #4235a7;
+    color: #ffffff;
+    transform: scale(1.05);
+}
+
+/* Días vacíos (fuera del mes actual) */
 .empty-day {
     background-color: transparent;
-}al) */
-empty-day {
-/* Estilo para fines de semana */    background-color: transparent;
+}
+
+/* Estilo para fines de semana */
 .weekend {
     color: #f14747;
-    font-weight: 600;s de semana */
+    font-weight: 600;
 }
-   color: #f14747;
-/* Responsive para pantallas pequeñas */    font-weight: 600;
+
+/* Responsive para pantallas pequeñas */
 @media (max-width: 768px) {
     .calendar-header h2 {
         font-size: 1em; /* Ajustar tamaño de fuente */
-    }   width: .5rem;
-    height: .5rem;
+    }
+
     .day-of-week {
         font-size: 0.75em; /* Ajustar tamaño de fuente */
     }
-   width: 10%;
-    .day {    height: 10%;
+
+    .day {
         font-size: 0.75em; /* Ajustar tamaño de fuente */
-        padding: 0.375em; /* Ajustar padding */s pequeñas */
-    } {
+        padding: 0.375em; /* Ajustar padding */
+    }
 }
