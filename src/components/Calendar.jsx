@@ -3,6 +3,7 @@ import '../styles/components/calendar.css';
 
 const Calendar = () => {
     const [currentDate, setCurrentDate] = useState(new Date());
+    const [selectedDate, setSelectedDate] = useState(null);
 
     const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -21,9 +22,13 @@ const Calendar = () => {
     };
 
     const handleDayClick = (day) => {
-        const selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+        const selectedDate = new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth(),
+            day
+        );
+        setSelectedDate(selectedDate);
         console.log('Selected date:', selectedDate);
-        // Aquí puedes enviar la fecha seleccionada al backend o manejarla como necesites
     };
 
     const renderDays = () => {
@@ -38,8 +43,13 @@ const Calendar = () => {
         for (let day = 1; day <= daysInMonth; day++) {
             const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
             const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+            const isSelected = selectedDate && date.toDateString() === selectedDate.toDateString();
             days.push(
-                <div key={day} className={`day ${isWeekend ? 'weekend' : ''}`} onClick={() => handleDayClick(day)}>
+                <div
+                    key={day}
+                    className={`day ${isWeekend ? 'weekend' : ''} ${isSelected ? 'selected' : ''}`}
+                    onClick={() => handleDayClick(day)}
+                >
                     {day}
                 </div>
             );
@@ -63,6 +73,11 @@ const Calendar = () => {
                 ))}
             </div>
             <div className="days">{renderDays()}</div>
+            {selectedDate && (
+                <div className="selected-date">
+                    Fecha seleccionada: {selectedDate.toLocaleDateString()}
+                </div>
+            )}
         </div>
     );
 };

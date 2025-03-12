@@ -1,0 +1,31 @@
+.menu {
+    margin-bottom: 2em;
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu li {
+    margin-bottom: .2em;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #333;
+    display: flex;
+    align-items: center;
+    font-size: 1em;
+    transition: color 0.3s ease;
+}
+
+.menu a:hover {
+    color: #35a744;
+}
+
+.menu a svg {
+    color: #2b4ee9;
+    margin-right: 0.5em;
+}

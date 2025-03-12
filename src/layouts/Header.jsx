@@ -27,7 +27,6 @@ const Header = () => {
         <Link to="/" className="nav-brand">
           <span className="text-gradient">Sistema de Citas</span>
         </Link>
-
         <div className="nav-content">
           {isAuthenticated && (
             <div className="user-info">
