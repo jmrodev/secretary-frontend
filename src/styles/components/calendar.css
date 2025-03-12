@@ -66,12 +66,10 @@
     gap: 0.25em; /* Usar em para el gap */
     padding: 0.5em; /* Usar em para padding */
 }
-   padding: 0.5em; /* Usar em para padding */
-.day {    flex-grow: 1;
+.day {    
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0.5em; /* Usar em para padding */
     background-color: #f9f9f9;
     border-radius: 8px;
     font-size: 0.875em; /* Usar em para el tamaño de fuente */Usar em para padding */
