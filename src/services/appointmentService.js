@@ -196,3 +196,39 @@ export const getAppointmentsByDate = async (year, month, day) => {
         throw error;
     }
 };
+
+export const fetchWeeklyAppointments = async (startDate, endDate) => {
+    try {
+        const token = localStorage.getItem('authToken');
+        const response = await fetch(
+            `${config.baseUrl}/appointment/weekly-slots?startDate=${startDate}&endDate=${endDate}`,
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+            }
+        );
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || 'Error al obtener citas semanales');
+        }
+
+        const data = await response.json();
+
+        // Log the response for debugging
+        console.log('Backend response:', data);
+
+        // Extract appointments from the "data" property
+        if (data && data.data && Array.isArray(data.data)) {
+            return data.data; // Return the appointments array
+        }
+
+        throw new Error('El formato de la respuesta no es válido');
+    } catch (error) {
+        console.error('Error en fetchWeeklyAppointments:', error.message);
+        throw error;
+    }
+};

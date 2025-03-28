@@ -25,9 +25,8 @@ const Week = () => {
   }, [dispatch, selectedDate]);
 
   const getAppointmentsForDate = (date) => {
-    const validAppointments = Array.isArray(appointments) ? appointments : []; // Ensure appointments is an array
-    return validAppointments.filter(apt => {
-      const appointmentDate = new Date(apt.appointmentDate);
+    return appointments.filter(apt => {
+      const appointmentDate = new Date(apt.date); // Use the "date" field from the backend response
       return (
         appointmentDate.getFullYear() === date.getFullYear() &&
         appointmentDate.getMonth() === date.getMonth() &&
@@ -36,14 +35,9 @@ const Week = () => {
     });
   };
 
-  const isSlotAvailable = (date, time) => {
-    const appointmentsForDate = getAppointmentsForDate(date);
-    return !appointmentsForDate.some(apt => apt.appointmentTime === time);
-  };
-
   const getAppointmentForSlot = (date, time) => {
     const appointmentsForDate = getAppointmentsForDate(date);
-    return appointmentsForDate.find(apt => apt.appointmentTime === time);
+    return appointmentsForDate.find(apt => apt.time === time); // Match by "time" field
   };
 
   const handleTimeSlotClick = (date, time) => {
@@ -106,8 +100,8 @@ const Week = () => {
                     <span className="time">{time}</span>
                     {appointment && (
                       <div className="appointment-info">
-                        <span className="patient-name">{appointment.patientName}</span>
-                        <span className="appointment-reason">{appointment.reason}</span>
+                        <span className="patient-name">{appointment.patient}</span> {/* Use "patient" field */}
+                        <span className="appointment-reason">{appointment.reason}</span> {/* Use "reason" field */}
                       </div>
                     )}
                   </div>

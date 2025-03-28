@@ -6,6 +6,7 @@ import {
   updateApointment,
   deleteApointment,
   getAppointmentsByDate, // Ensure this function exists in appointmentService
+  fetchWeeklyAppointments, // Import the new function
 } from '../../services/appointmentService';
 
 // Async thunks
@@ -57,38 +58,8 @@ export const fetchWeekAppointments = createAsyncThunk(
   'appointments/fetchWeekAppointments',
   async ({ startDate, endDate }, { rejectWithValue }) => {
     try {
-      const token = localStorage.getItem('authToken');
-      const response = await fetch(
-        `${config.baseUrl}/appointment/weekly-slots?startDate=${startDate}&endDate=${endDate}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || 'Error al obtener citas semanales');
-      }
-
-      const data = await response.json();
-
-      // Log the response for debugging
-      console.log('Backend response:', data);
-
-      // Handle different response formats
-      if (data && Array.isArray(data)) {
-        return data; // If the response is already an array
-      } else if (data && data.appointments && Array.isArray(data.appointments)) {
-        return data.appointments; // If the response is an object with an "appointments" array
-      }
-
-      throw new Error('El formato de la respuesta no es válido');
+      return await fetchWeeklyAppointments(startDate, endDate); // Use the new function
     } catch (error) {
-      console.error('Error en fetchWeekAppointments:', error.message);
       return rejectWithValue(error.message);
     }
   }
@@ -144,13 +115,13 @@ const appointmentSlice = createSlice({
         state.error = null;
       })
       .addCase(editAppointment.fulfilled, (state, action) => {
-        state.loading = false;
         const index = state.appointments.findIndex(
           (apt) => apt.id === action.payload.id
         );
         if (index !== -1) {
           state.appointments[index] = action.payload;
         }
+        state.loading = false;
       })
       .addCase(editAppointment.rejected, (state, action) => {
         state.loading = false;
