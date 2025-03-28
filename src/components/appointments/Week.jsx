@@ -35,9 +35,31 @@ const Week = () => {
     });
   };
 
+  const normalizeTime = (time) => {
+    // Asegura que el formato sea HH:mm
+    if (!time.includes(':')) {
+      console.warn(`Formato de hora inesperado: ${time}`);
+      return time; // Devuelve la hora sin cambios si no tiene el formato esperado
+    }
+    const [hours, minutes] = time.split(':');
+    const normalizedHours = hours.padStart(2, '0'); // Asegura que las horas tengan 2 dígitos
+    const normalizedMinutes = minutes.padStart(2, '0'); // Asegura que los minutos tengan 2 dígitos
+    return `${normalizedHours}:${normalizedMinutes}`;
+  };
+
   const getAppointmentForSlot = (date, time) => {
     const appointmentsForDate = getAppointmentsForDate(date);
-    return appointmentsForDate.find(apt => apt.time === time); // Match by "time" field
+
+    // Log para depurar las citas del día
+    console.log(`Appointments for ${date.toDateString()}:`, appointmentsForDate);
+
+    // Normaliza el formato de la hora para que coincida con las franjas horarias
+    return appointmentsForDate.find(apt => {
+      const appointmentTime = normalizeTime(apt.time); // Normaliza la hora de la cita
+      const normalizedTime = normalizeTime(time); // Normaliza también el formato de la franja horaria
+      console.log(`Comparing time slot ${normalizedTime} with appointment time ${appointmentTime}`);
+      return appointmentTime === normalizedTime;
+    });
   };
 
   const handleTimeSlotClick = (date, time) => {
@@ -90,7 +112,11 @@ const Week = () => {
 
             <div className="time-slots">
               {timeSlots.map(time => {
-                const appointment = getAppointmentForSlot(date, time); // Get the appointment for this slot
+                const appointment = getAppointmentForSlot(date, time); // Obtén la cita para esta franja horaria
+
+                // Log para inspeccionar el contenido de cada time-slot
+                console.log(`Time Slot: ${time}`, appointment);
+
                 return (
                   <div
                     key={time}
@@ -100,8 +126,8 @@ const Week = () => {
                     <span className="time">{time}</span>
                     {appointment && (
                       <div className="appointment-info">
-                        <span className="patient-name">{appointment.patient}</span> {/* Use "patient" field */}
-                        <span className="appointment-reason">{appointment.reason}</span> {/* Use "reason" field */}
+                        <span className="patient-name">{appointment.patient}</span>
+                        <span className="appointment-reason">{appointment.reason}</span>
                       </div>
                     )}
                   </div>
