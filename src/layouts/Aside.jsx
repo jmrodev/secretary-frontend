@@ -6,9 +6,9 @@ import Navbar from './Navbar';
 const Aside = () => {
   return (
     <aside className="aside">
-      <Navbar />
+      
       <Calendar />
-
+<Navbar />
 
     </aside>
   );
