@@ -96,18 +96,18 @@ const Week = () => {
 
             <div className="time-slots">
               {timeSlots.map(time => {
-                const available = isSlotAvailable(date, time);
                 const appointment = getAppointmentForSlot(date, time); // Get the appointment for this slot
                 return (
                   <div
                     key={time}
-                    className={`time-slot ${available ? 'available' : 'occupied'}`}
-                    onClick={() => available && handleTimeSlotClick(date, time)}
+                    className={`time-slot ${appointment ? 'occupied' : 'available'}`}
+                    onClick={() => !appointment && handleTimeSlotClick(date, time)}
                   >
                     <span className="time">{time}</span>
-                    {!available && appointment && (
-                      <div className="appointment-info text-danger">
-                        {appointment.patientName} - {appointment.reason}
+                    {appointment && (
+                      <div className="appointment-info">
+                        <span className="patient-name">{appointment.patientName}</span>
+                        <span className="appointment-reason">{appointment.reason}</span>
                       </div>
                     )}
                   </div>

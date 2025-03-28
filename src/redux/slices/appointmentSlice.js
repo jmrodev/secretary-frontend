@@ -74,8 +74,21 @@ export const fetchWeekAppointments = createAsyncThunk(
         throw new Error(error.message || 'Error al obtener citas semanales');
       }
 
-      return await response.json();
+      const data = await response.json();
+
+      // Log the response for debugging
+      console.log('Backend response:', data);
+
+      // Handle different response formats
+      if (data && Array.isArray(data)) {
+        return data; // If the response is already an array
+      } else if (data && data.appointments && Array.isArray(data.appointments)) {
+        return data.appointments; // If the response is an object with an "appointments" array
+      }
+
+      throw new Error('El formato de la respuesta no es válido');
     } catch (error) {
+      console.error('Error en fetchWeekAppointments:', error.message);
       return rejectWithValue(error.message);
     }
   }
