@@ -11,8 +11,6 @@
 const API_HOST = import.meta.env.VITE_API_HOST || 'http://localhost:3002';
 const API_BASE = `${API_HOST}/api`;
 
-
-
 /**
  * Formatos de fecha y hora utilizados en la aplicación
  * @constant {Object}
@@ -46,12 +44,14 @@ const PAGINATION = {
  * @property {number} auth - Timeout para operaciones de autenticación (5 segundos)
  * @property {number} upload - Timeout para subida de archivos (30 segundos)
  * @property {number} search - Timeout para búsquedas y filtrados (15 segundos)
+ * @property {number} appointment - Timeout para operaciones relacionadas con citas (20 segundos)
  */
 const TIMEOUTS = {
   default: 10000,    // 10 seconds - timeout por defecto
   auth: 5000,        // 5 seconds - operaciones de autenticación
   upload: 30000,     // 30 seconds - subida de archivos
-  search: 15000      // 15 seconds - búsquedas y filtrados
+  search: 15000,     // 15 seconds - búsquedas y filtrados
+  appointment: 20000 // 20 seconds - operaciones relacionadas con citas
 };
 
 /**
@@ -75,8 +75,6 @@ const config = {
     register: `${API_BASE}/users/register`,
     logout: `${API_BASE}/users/logout`
   },
-
-
 
   // Request timeouts
   timeouts: TIMEOUTS,

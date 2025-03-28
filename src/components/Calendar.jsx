@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import '../styles/components/calendar.css';
 
-const Calendar = () => {
+const Calendar = ({ excludeWeekends = true }) => {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [selectedDate, setSelectedDate] = useState(null);
 
@@ -36,23 +37,28 @@ const Calendar = () => {
         const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
         const days = [];
 
+        // Add empty days for alignment
         for (let i = 0; i < firstDayOfMonth; i++) {
             days.push(<div key={`empty-${i}`} className="empty-day"></div>);
         }
 
+        // Add days of the month
         for (let day = 1; day <= daysInMonth; day++) {
             const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
-            const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+            const isWeekend = date.getDay() === 0 || date.getDay() === 6; // Sunday (0) or Saturday (6)
             const isSelected = selectedDate && date.toDateString() === selectedDate.toDateString();
-            days.push(
-                <div
-                    key={day}
-                    className={`day ${isWeekend ? 'weekend' : ''} ${isSelected ? 'selected' : ''}`}
-                    onClick={() => handleDayClick(day)}
-                >
-                    {day}
-                </div>
-            );
+
+            if (!excludeWeekends || !isWeekend) {
+                days.push(
+                    <div
+                        key={day}
+                        className={`day ${isSelected ? 'selected' : ''}`}
+                        onClick={() => handleDayClick(day)}
+                    >
+                        {day}
+                    </div>
+                );
+            }
         }
 
         return days;
@@ -80,6 +86,10 @@ const Calendar = () => {
             )}
         </div>
     );
+};
+
+Calendar.propTypes = {
+    excludeWeekends: PropTypes.bool, // Prop to control whether weekends are excluded
 };
 
 export default Calendar;

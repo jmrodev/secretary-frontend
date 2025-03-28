@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
 import { FaCalendarAlt, FaUserMd, FaUsers, FaCog } from 'react-icons/fa';
 import '../styles/pages/dashboard.css';
-
 const Dashboard = () => {
   const { user, isLoading } = useSelector(state => state.auth);
 

@@ -3,11 +3,16 @@ import { loginUser, register as registerUser, logout as logoutUser } from '../..
 import { setAuthToken, removeAuthToken } from '../../utils/authUtils';
 
 export const loginAsync = createAsyncThunk(
-  '/login',
-  async (credentials) => {
-    const response = await loginUser(credentials);
-    setAuthToken(response.token);
-    return response;
+  'auth/login',
+  async (credentials, { rejectWithValue }) => {
+    try {
+      const response = await loginUser(credentials);
+      localStorage.setItem('authToken', response.token); // Save token in localStorage
+      setAuthToken(response.token);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
 );
 
@@ -24,7 +29,7 @@ export const registerAsync = createAsyncThunk(
 );
 
 export const logoutAsync = createAsyncThunk(
-  '/users/logout',
+  '/logout',
   async (_, { rejectWithValue }) => {
     try {
       await logoutUser();

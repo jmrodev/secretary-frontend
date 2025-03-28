@@ -1,17 +1,18 @@
 .error-container {
-  background-color: var(--danger-color);
-  color: var(--text-light);
-  padding: var(--spacing-md);
-  border-radius: var(--border-radius-md);
-  margin: var(--spacing-md) 0;
   display: flex;
   align-items: flex-start;
-  gap: var(--spacing-md);
+  gap: 1rem;
+  padding: 1rem;
+  background-color: rgba(231, 76, 60, 0.1);
+  border: 1px solid var(--danger-color);
+  border-radius: 8px;
+  margin-bottom: 1rem;
 }
 
 .error-icon {
-  font-size: var(--font-size-xl);
-  color: var(--text-light);
+  font-size: 1.5rem;
+  color: var(--danger-color);
+  flex-shrink: 0;
 }
 
 .error-content {
@@ -19,36 +20,47 @@
 }
 
 .error-title {
-  font-size: var(--font-size-lg);
-  margin-bottom: var(--spacing-xs);
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--danger-color);
+  margin-bottom: 0.5rem;
 }
 
 .error-message {
-  margin-bottom: var(--spacing-sm);
+  font-size: 1rem;
+  color: var(--text-color);
+  margin-bottom: 1rem;
 }
 
 .error-actions {
   display: flex;
-  gap: var(--spacing-sm);
-  margin-top: var(--spacing-sm);
+  gap: 0.5rem;
 }
 
-.retry-button,
-.dismiss-button {
-  background: none;
-  border: 1px solid var(--text-light);
-  color: var(--text-light);
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: var(--border-radius-sm);
+.retry-button {
+  background-color: var(--danger-color);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
   cursor: pointer;
-  transition: all var(--transition-speed);
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-xs);
+  font-weight: bold;
 }
 
-.retry-button:hover,
-.dismiss-button:hover {
-  background-color: var(--text-light);
+.retry-button:hover {
+  background-color: #c0392b;
+}
+
+.dismiss-button {
+  background-color: transparent;
+  border: 1px solid var(--danger-color);
   color: var(--danger-color);
-} 
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.dismiss-button:hover {
+  background-color: rgba(231, 76, 60, 0.1);
+}

@@ -1,28 +1,21 @@
-import config from '../config/env.cfg';
+import config from '../config/env.config';
 
 export const loginUser = async (credentials) => {
   try {
-    const response = await fetch(`${config.baseUrl}/users/login`, { 
+    const response = await fetch(`${config.baseUrl}/users/login`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(credentials)
+      body: JSON.stringify(credentials),
     });
 
     if (!response.ok) {
       const error = await response.json();
-      console.error('Response:', response); 
       throw new Error(error.message || 'Error al iniciar sesión');
     }
 
-    const data = await response.json();
-    localStorage.setItem('userName', data.user.name);
-    localStorage.setItem('userId', data.user.id);
-    localStorage.setItem('userRole', data.user.role);
-    localStorage.setItem('userEmail', data.user.email);
-    localStorage.setItem('authToken', data.token);
-    return data;
+    return await response.json();
   } catch (error) {
     console.error('Error en login:', error);
     throw error;
@@ -30,55 +23,47 @@ export const loginUser = async (credentials) => {
 };
 
 export const register = async (userData) => {
-  
-    const response = await fetch(`${config.baseUrl}/users/register`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(userData)
-    });
+  const response = await fetch(`${config.baseUrl}/users/register`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(userData),
+  });
 
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message || 'Error al registrar usuario');
-    }
-
-    return await response.json();
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || 'Error al registrar usuario');
   }
 
+  return await response.json();
+};
 
 export const logout = async () => {
-  localStorage.removeItem('userName');
-  localStorage.removeItem('userId');
-  localStorage.removeItem('userRole');
-  localStorage.removeItem('userEmail');
-  localStorage.removeItem('authToken');
-  localStorage.removeItem('token');
-    // const userName = localStorage.getItem('userName');
-    const response = await fetch(`${config.baseUrl}/users/logout`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+  const response = await fetch(`${config.baseUrl}/users/logout`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
 
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message || 'Error al cerrar sesión');
-    }
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || 'Error al cerrar sesión');
+  }
 
-    return true;
-  } 
+  return true;
+};
 
-  export const changePassword = async (passwordData) => {
+export const changePassword = async (passwordData) => {
+  try {
     const response = await fetch(`${config.baseUrl}/users/change-password`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        Authorization: `Bearer ${localStorage.getItem('authToken')}`,
       },
-      body: JSON.stringify(passwordData)
+      body: JSON.stringify(passwordData),
     });
 
     if (!response.ok) {
@@ -87,22 +72,32 @@ export const logout = async () => {
     }
 
     return await response.json();
-  };
-
-  export const updateProfile = async (profileData) => {
-  const response = await fetch(`${config.baseUrl}/users/profile`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-    },
-    body: JSON.stringify(profileData)
-  });
-
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || 'Error al actualizar el perfil');
+  } catch (error) {
+    console.error('Error en changePassword:', error);
+    throw error;
   }
-
-  return await response.json();
 };
+
+export const updateProfile = async (profileData) => {
+  try {
+    const response = await fetch(`${config.baseUrl}/users/update-profile`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+      },
+      body: JSON.stringify(profileData),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || 'Error al actualizar el perfil');
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error en updateProfile:', error);
+    throw error;
+  }
+};
+
