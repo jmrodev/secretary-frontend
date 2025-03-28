@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import config from '../../config/env.config'; // Import config
 import {
   getAllApointments,
   createApointment,
@@ -56,28 +57,24 @@ export const fetchWeekAppointments = createAsyncThunk(
   'appointments/fetchWeekAppointments',
   async ({ startDate, endDate }, { rejectWithValue }) => {
     try {
-      const appointments = [];
-      let currentDate = new Date(startDate);
-
-      while (currentDate <= new Date(endDate)) {
-        const year = currentDate.getFullYear();
-        const month = currentDate.getMonth() + 1; // Months are 0-based
-        const day = currentDate.getDate();
-        const response = await getAppointmentsByDate(year, month, day);
-
-        // Ensure response is an array and append it to appointments
-        if (Array.isArray(response)) {
-          appointments.push(...response);
-        } else if (response.data && Array.isArray(response.data)) {
-          appointments.push(...response.data);
-        } else {
-          console.warn('Unexpected response format:', response);
+      const token = localStorage.getItem('authToken');
+      const response = await fetch(
+        `${config.baseUrl}/appointment/weekly-slots?startDate=${startDate}&endDate=${endDate}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
         }
+      );
 
-        currentDate.setDate(currentDate.getDate() + 1);
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || 'Error al obtener citas semanales');
       }
 
-      return appointments;
+      return await response.json();
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -86,7 +83,7 @@ export const fetchWeekAppointments = createAsyncThunk(
 
 // Initial state
 const initialState = {
-  appointments: [],
+  appointments: [], // Ensure this is an empty array
   loading: false,
   error: null,
 };

@@ -19,13 +19,14 @@ const Week = () => {
   });
 
   useEffect(() => {
-    const startDate = weekDates[0];
-    const endDate = weekDates[weekDates.length - 1];
+    const startDate = weekDates[0].toISOString().split('T')[0]; // Format as YYYY-MM-DD
+    const endDate = weekDates[weekDates.length - 1].toISOString().split('T')[0];
     dispatch(fetchWeekAppointments({ startDate, endDate }));
   }, [dispatch, selectedDate]);
 
   const getAppointmentsForDate = (date) => {
-    return appointments.filter(apt => {
+    const validAppointments = Array.isArray(appointments) ? appointments : []; // Ensure appointments is an array
+    return validAppointments.filter(apt => {
       const appointmentDate = new Date(apt.appointmentDate);
       return (
         appointmentDate.getFullYear() === date.getFullYear() &&
@@ -33,6 +34,16 @@ const Week = () => {
         appointmentDate.getDate() === date.getDate()
       );
     });
+  };
+
+  const isSlotAvailable = (date, time) => {
+    const appointmentsForDate = getAppointmentsForDate(date);
+    return !appointmentsForDate.some(apt => apt.appointmentTime === time);
+  };
+
+  const getAppointmentForSlot = (date, time) => {
+    const appointmentsForDate = getAppointmentsForDate(date);
+    return appointmentsForDate.find(apt => apt.appointmentTime === time);
   };
 
   const handleTimeSlotClick = (date, time) => {
@@ -56,11 +67,6 @@ const Week = () => {
     '15:00', '15:30', '16:00', '16:30', '17:00', '17:30'
   ];
 
-  const isSlotAvailable = (date, time) => {
-    const appointmentsForDate = getAppointmentsForDate(date);
-    return !appointmentsForDate.some(apt => apt.appointmentTime === time);
-  };
-
   if (loading) {
     return <div className="loading">Cargando calendario...</div>;
   }
@@ -73,8 +79,8 @@ const Week = () => {
         <ErrorMessage
           message={error}
           onRetry={() => {
-            const startDate = weekDates[0];
-            const endDate = weekDates[weekDates.length - 1];
+            const startDate = weekDates[0].toISOString().split('T')[0];
+            const endDate = weekDates[weekDates.length - 1].toISOString().split('T')[0];
             dispatch(fetchWeekAppointments({ startDate, endDate }));
           }}
         />
@@ -91,6 +97,7 @@ const Week = () => {
             <div className="time-slots">
               {timeSlots.map(time => {
                 const available = isSlotAvailable(date, time);
+                const appointment = getAppointmentForSlot(date, time); // Get the appointment for this slot
                 return (
                   <div
                     key={time}
@@ -98,10 +105,9 @@ const Week = () => {
                     onClick={() => available && handleTimeSlotClick(date, time)}
                   >
                     <span className="time">{time}</span>
-                    {!available && (
+                    {!available && appointment && (
                       <div className="appointment-info text-danger">
-                        {getAppointmentsForDate(date)
-                          .find(apt => apt.appointmentTime === time)?.patientName}
+                        {appointment.patientName} - {appointment.reason}
                       </div>
                     )}
                   </div>

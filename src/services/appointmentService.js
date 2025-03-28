@@ -1,4 +1,4 @@
-import config from '../config/env.cfg';
+import config from '../config/env.config'; // Ensure correct import
 
 export const getAllApointments = async () => {
     try {
