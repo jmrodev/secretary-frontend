@@ -12,11 +12,15 @@ const Week = () => {
   const [showForm, setShowForm] = useState(false);
   const [selectedSlot, setSelectedSlot] = useState(null);
 
-  const weekDates = getWeekDates(selectedDate || new Date());
+  // Filter out weekends (Saturday and Sunday) from the weekDates
+  const weekDates = getWeekDates(selectedDate || new Date()).filter(date => {
+    const day = date.getDay();
+    return day !== 0 && day !== 6; // Exclude Sunday (0) and Saturday (6)
+  });
 
   useEffect(() => {
     const startDate = weekDates[0];
-    const endDate = weekDates[6];
+    const endDate = weekDates[weekDates.length - 1];
     dispatch(fetchWeekAppointments({ startDate, endDate }));
   }, [dispatch, selectedDate]);
 
@@ -70,7 +74,7 @@ const Week = () => {
           message={error}
           onRetry={() => {
             const startDate = weekDates[0];
-            const endDate = weekDates[6];
+            const endDate = weekDates[weekDates.length - 1];
             dispatch(fetchWeekAppointments({ startDate, endDate }));
           }}
         />
